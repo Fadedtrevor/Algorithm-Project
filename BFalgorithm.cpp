@@ -4,6 +4,8 @@ of finding the minimum number of coins needed to make up a given amount. As well
 in 50 cent and dollar coins. */
 
 #include <iostream>
+#include <chrono>
+#include <iomanip>
 #include <vector>
 
 using namespace std;
@@ -67,8 +69,11 @@ int main()
     vector<int> bestUsed;
     int bestCoinCount = amount + 1;
 
-    // Calling the recursive function to find best solution
+    // Calling the recursive function to find best solution and tracking the time
+    const auto startTime = chrono::steady_clock::now();
     findBestSolution(amount, 0, coins, used, bestCoinCount, bestUsed);
+    const auto endTime = chrono::steady_clock::now();
+    const chrono::duration<double> elapsedTime = endTime - startTime;
 
     cout << "Minimum number of coins needed: " << bestCoinCount << endl;
     cout << "Coin combination: ";
@@ -100,4 +105,7 @@ int main()
     }
 
     cout << endl;
+    // Displaying the time it took for algorithm to run
+    cout << fixed << setprecision(6)
+         << "Algorithm runtime: " << elapsedTime.count() << " seconds" << endl;
 }
